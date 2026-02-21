@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Sign In{% endblock %}
+{% block content %}
+
+<body class="text-center">
+        
+        <h2 class="home-title">Sign In</h2>
+
+        <form class="signin-form" method="POST" >
+
+            {{form.hidden_tag()}}           
+            {{ form.username.label }} 
+            {{ form.username(class_="form-control", placeholder="User Name") }}
+            <br>    
+            {{ form.password.label }} 
+            {{ form.password(class_="form-control", placeholder="Password") }}
+            <br>
+            <div class="checkbox mb-3">
+               <h3 style="font-family:sans-serif; font-size:12px; display:inline;">Do not have an account? </h3><a class="register-link" href="{{ url_for('signup_page') }}">Register</a> 
+            </div>
+            <br>
+            {{ form.submit(class_="btn-info") }}
+
+        </form>
+    </div>
+
+{% endblock %}

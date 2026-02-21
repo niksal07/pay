@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="home-title">Shop</h2>
+    
+    {% if current_user.is_authenticated and current_user.role == 'admin' %}
+        <p class="home-text">
+            Welcome, Admin! Here you can manage the items available in the shop. Use the buttons below to add new items, update existing ones, or delete items from the inventory.
+        </p>
+        <br>
+        <div class="add-item-container">
+            <a class="btn-info" href="{{ url_for('add_items') }}">Add Items</a>
+        </div>
+    {% else %}
+        <p class="home-text">
+            Browse our selection of items available for purchase. Click on "More Info" to see the details of each item, or "Pay Now" to proceed with the payment.
+        </p>
+    {% endif %}
+
+    <div class="table-container">
+    <table class="payment-table">
+        <thead>
+            <tr>
+                <th>Item No.</th>
+                <th>Name</th>
+                <th>Price($)</th>
+                <th>Description</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ loop.index  }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.description }}</td>
+                <td>
+                    {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                        <a class="btn-warning" href="{{ url_for('update', id=item.id) }}">Update</a> 
+                        <form action="{{ url_for('delete_items', bill_id=item.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    {% else %}
+                    <button class="btn-info">More Info</button>
+                    <button class="btn-success">Add to Cart</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

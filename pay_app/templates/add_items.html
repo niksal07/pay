@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="text-center">
+        
+        <h2 class="home-title">Add New Item</h2>
+            <form class="signin-form" method="POST">
+                Name:<br>   
+                <input class="form-control" type="text" name="name"><br><br>
+                Price:<br>
+                <input class="form-control" type="number" name="price"><br><br>
+                Description:<br>
+                <input class="form-control" type="text" name="description"><br><br>
+
+                <button class="btn-info" type="submit">Create</button>
+            </form>
+</body>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="home-title">Pay your Bills</h2>
+    <p class="home-text">
+        Here you can view and manage your bills. Click on "More Info" to see the details of each bill, or "Pay Now" to make a payment.
+    </p>
+    <div class="table-container">
+    <table class="payment-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Month</th>
+                <th>Amount($)</th>
+                <th>Due Date</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.id }}</td>
+                <td>{{ bill.name }}</td>
+                <td>{{ bill.month }}</td>
+                <td title="$">{{ bill.amount }}</td>
+                <td title="YYYY-MM-DD">
+                    {{ bill.due_date }}
+                </td>
+
+                <td class="table-actions">
+                    <button class="btn-info">More Info</button>
+                    <button class="btn-success">Pay Now</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

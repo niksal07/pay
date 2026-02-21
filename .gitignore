@@ -1,0 +1,8 @@
+/instance/pay_app.db
+/instance/pay_app.db-journal
+/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/

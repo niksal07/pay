@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+
+<body>
+
+    <nav class="navbar">
+        
+        <a class="navbar-brand" href="{{ url_for('home_page') }}">
+            <img src="https://res.cloudinary.com/dzn142qxe/image/upload/v1771059860/eIKHOIGEELOGO_kpkkcn.png"
+                alt="Pay Mart Logo"
+                class="navbar-logo">
+        </a>
+        
+        <div class="nav-left">
+            <a class="nav-link {% if request.endpoint == 'home_page' %}active{% endif %}"
+            href="{{ url_for('home_page') }}">Home</a>
+
+            <a class="nav-link {% if request.endpoint == 'shop_page' %}active{% endif %}"
+            href="{{ url_for('shop_page') }}">Shop</a>
+
+            <a class="nav-link {% if request.endpoint == 'pay_page' %}active{% endif %}"
+            href="{{ url_for('pay_page') }}">Pay Bills</a>
+        </div>
+        
+        {% if current_user.is_authenticated %}
+         <div class="nav-right">
+            <a class="nav-link" >Welcome, {{ current_user.username}} </a>
+            <a class="nav-link" href="{{ url_for('sign_out') }}">Sign out</a>
+    
+        {% else %}
+        <div class="nav-right">
+            <a class="nav-link" href="{{ url_for('signin_page') }}">Sign In</a>
+            <a class="nav-link" href="{{ url_for('signup_page') }}">Sign Up</a>
+            <a class="nav-link" href="{{ url_for('add_items') }}">Add New Item</a>
+        </div>  
+        {% endif %}
+    </nav>
+    <div class="container flash-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">
+                    <span class="flash-message">{{ message }}</span>
+                    <button class="flash-close">&times;</button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    </div>
+    <script>
+    document.querySelectorAll(".flash-close").forEach(button => {
+        button.addEventListener("click", function () {
+            this.parentElement.remove();
+        });
+    });
+    </script>
+
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>
+

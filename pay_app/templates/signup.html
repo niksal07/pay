@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body class="text-center">
+    <div class="container">
+        <h2 class="home-title">Sign Up</h2>
+
+        <form class="signup-form" method="POST" >
+
+            {{form.hidden_tag()}}
+            <br>
+            {{ form.username.label }} 
+            {{ form.username(class_="form-control", placeholder="User Name") }}
+            <br>
+            {{ form.email.label }} 
+            {{ form.email(class_="form-control", placeholder="Email")}}
+            <br>    
+            {{ form.password.label }} 
+            {{ form.password(class_="form-control", placeholder="Password") }}
+            <br>
+            {{ form.confirm_password.label }} 
+            {{ form.confirm_password(class_="form-control", placeholder="Confirm Password") }}
+            <br>
+            <div class="checkbox mb-3">
+               <h3 style="font-family:sans-serif; font-size:12px; display:inline;">Already have an account? </h3><a class="register-link" href="{{ url_for('signin_page') }}">Sign in</a> 
+            </div>
+            <br>
+            {{ form.submit(class_="btn-info") }}
+
+        </form>
+    </div>
+</body>
+{% endblock %}
