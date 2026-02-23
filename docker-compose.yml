@@ -1,0 +1,35 @@
+services:
+  web:
+    image: flaskapp:latest
+    ports:
+      - "5000:5000"
+    environment:
+      DB_USER: appuser
+      DB_PASSWORD: apppass
+      DB_HOST: db
+      DB_NAME: pay_app_db
+      SECRET_KEY: mydevopssecret123
+    depends_on:
+      - db
+    networks:
+      - two-tier
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: pay_app_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - two-tier
+
+volumes:
+  db_data:
+
+networks:
+  two-tier:
