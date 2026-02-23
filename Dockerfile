@@ -2,6 +2,8 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
+ENV FLASK_APP=run.py
+
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends \
         build-essential \
