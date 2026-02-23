@@ -7,5 +7,12 @@ while ! nc -z db 3306; do
 done
 
 echo "MySQL started!"
+echo "Running migrations..."
+flask db init
+flask db migrate -m "Initial migration."
+flask db upgrade
+
+echo "Seeding admin..."
+python create_admin.py
 
 python run.py   
