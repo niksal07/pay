@@ -7,19 +7,18 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_HOST = os.getenv("DB_HOST")
-DB_NAME = os.getenv("DB_NAME")
+MYSQL_USER = os.getenv("MYSQL_USER", "local_user")  # Default to 'local_user' if not set
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "local_pass")  # Default to 'local_pass' if not set
+MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")  # Default to 'localhost' if not set
+MYSQL_DB = os.getenv("MYSQL_DB", "pay_app_db")  # Default to 'pay_app_db' if not set
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pay_app.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
-
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}/{MYSQL_DB}"
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')  # Generate a random secret key for session management
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-with app.app_context():
-    db.create_all()
+
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'signin_page'  # Redirect to signin page if not logged in
